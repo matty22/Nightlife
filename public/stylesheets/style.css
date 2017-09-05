@@ -1,8 +1,68 @@
+
 body {
-  padding: 50px;
+  padding: 0px 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 6fr 1fr;
+  grid-template-areas:
+  "header"
+  "main"
+  "footer"
 }
 
-a {
-  color: #00B7FF;
+#searchArea {
+  grid-area: header;
+  padding-bottom: 20px;
+  border-bottom: 2px dashed #000000;
+}
+
+main {
+  grid-area: main;
+  padding: 20px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+/* Style the results cards */
+#resultsGrid div {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 300px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+#resultsGrid div a {
+  padding: 5px 5px;
+}
+
+#resultsGrid div p {
+  padding: 0px 5px;
+}
+
+#resultsGrid div input {
+  background-color: #0d95f3;
+  color: #ffffff;
+  border: none;
+}
+/* End styling of results cards */
+
+footer {
+  grid-area: footer;
+  padding-top: 20px;
+  border-top: 2px dashed #000000;
+}
+
+@media screen and (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  main {
+    grid-template-columns: 1fr 1fr;
+  }
 }
