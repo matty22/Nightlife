@@ -2,6 +2,7 @@
 body {
   padding: 0px 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #fafafa;
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 6fr 1fr;
@@ -29,9 +30,9 @@ main {
   display: flex;
   flex-direction: column;
   width: 200px;
-  height: 300px;
+  max-height: 300px;
   margin-bottom: 20px;
-  border: 1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 #resultsGrid div a {
@@ -46,6 +47,7 @@ main {
   background-color: #0d95f3;
   color: #ffffff;
   border: none;
+  height: 40px;
 }
 /* End styling of results cards */
 

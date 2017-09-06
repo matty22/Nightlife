@@ -4,17 +4,16 @@ function search() {
   searchObj.term = 'nightlife';
 
   let json = JSON.stringify(searchObj);
-  console.log(json);
   let xhr = new XMLHttpRequest();
   xhr.open('POST', 'http://localhost:3000/search', true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function() {
       if (xhr.status === 200) {
-        let barArray = JSON.parse(xhr.responseText).jsonBody.businesses
+        let barArray = JSON.parse(xhr.responseText)
         console.log(barArray);
         barArray.forEach(function(element) {
           var cardChild = document.createElement("div");
-          cardChild.innerHTML = "<img src='" + element.image_url +"' width='200' height='200'>" + "<a href='" + element.url + "'>" + element.name + "</a><p>" + element.location.address1 + "</p><input type='button' value='Im going!'>";
+          cardChild.innerHTML = "<img src='" + element.image_url +"' width='200' height='200'>" + "<a href='" + element.url + "'>" + element.name + "</a><p>" + element.location + "</p><input type='button' value='Im going!'>";
           document.getElementById("resultsGrid").appendChild(cardChild);
         });
       }
