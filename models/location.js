@@ -2,28 +2,23 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// Define poll schema
+// Define business sub-schema
 var businessSchema = new Schema({
   name: {
     type: String,
     required: true
   },
-  _id: {
-    type: String,
-    required: true,
-    unique: true
+  id: {
+    type: String
   },
   image_url: {
-    type: String,
-    required: true
+    type: String
   },
   url: {
     type: String,
-    required: true
   },
   location: {
-    type: String,
-    required: true
+    type: String
   },
   votes: {
     type: Number,
@@ -33,8 +28,19 @@ var businessSchema = new Schema({
   timestamps: true
 });
 
+// Define location schema
+var locationSchema = new Schema({
+  searchCenter: {
+    type: String,
+    required: true
+  },
+  results: [businessSchema]},
+  {
+    timestamps: true
+  });
+
 // Create Poll model using poll schema
-var Businesses = mongoose.model('Business', businessSchema);
+var Locations = mongoose.model('Location', locationSchema);
 
 // Make this available outside this module
-module.exports = Businesses;
+module.exports = Locations;
