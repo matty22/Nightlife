@@ -34,7 +34,8 @@ function search() {
 function going(e) {
   let requestObject = {};
   requestObject._id = gServerResponse._id;
-  requestObject.resultId = e.srcElement.id;
+  requestObject.resultsId = e.srcElement.id;
+  console.log(requestObject);
   // This map works, but will need refactored to do this based on individual users
   // requestObject.results.map(function(element) {
   //   if (element.name === e.srcElement.parentElement.children[1].text && element.votes === 0) {

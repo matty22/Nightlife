@@ -138,10 +138,18 @@ searchRouter.route('/going')
               // This is now returning the entire object for the search result.
               // Next step, is to refine the response down to just the individual business
               // in the results array
-              Locations.findById(req.body._id, function(err, result) {
-                res.send(result);
-              });
+              // Locations.findById(req.body._id, function(err, result) {
+              //   res.send(result);
+              // });
+              Locations.find({_id: req.body._id})
+                       .where('results.id').equals(req.body.resultsId)
+                       .exec(function(err, result) {
+                         res.send(result);
+                       });
             });
+
+
+            // db.collectionName.find({"magazine.articles":{"$elemMatch":{"articleLayouts":{"$elemMatch":{"pageLayouts":{"$in":["2d641b7c-3d74-4cfa-8267-d5a01ed2614b"]}}}}}}).pretty()
 
 module.exports = searchRouter;
 
