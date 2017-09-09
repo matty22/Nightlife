@@ -135,9 +135,10 @@ searchRouter.route('/search')
 
 searchRouter.route('/going')
             .put(function(req, res, next) {
-              console.log(req.body.id);
-              // Look at how you did this in the Voting App
-              Locations.find({'id': req.body.id}, function(err, result) {
+              // This is now returning the entire object for the search result.
+              // Next step, is to refine the response down to just the individual business
+              // in the results array
+              Locations.findById(req.body._id, function(err, result) {
                 res.send(result);
               });
             });
