@@ -60,22 +60,29 @@ searchRouter.route('/search')
               });
             });
 
+// Route for when someone clicks the I'm going button
 searchRouter.route('/going')
             .put(function(req, res, next) {
-              // This is now returning the entire object for the search result.
-              // Next step, is to refine the response down to just the individual business
-              // in the results array
-              // Locations.findById(req.body._id, function(err, result) {
-              //   res.send(result);
-              // });
               Locations.findOne({_id: req.body._id}, function(err, doc) {
                 if (err) throw err;
-                res.send(doc.results);
+                // Find the business I clicked on in search results object
+                let singleBusiness = doc.results.filter(function(innerObj) {
+                  if (innerObj.id === req.body.resultsId) {
+                    return innerObj;
+                  }
+                });
+                let resultsIndex = doc.results.indexOf(singleBusiness[0]);
+                // Adjust the votes total
+                // This will need to be adjusted once user login has been added
+                if (singleBusiness[0].votes === 0) {
+                  doc.results[resultsIndex].votes++;
+                  doc.save();
+                } else if (singleBusiness[0].votes === 1) {
+                  doc.results[resultsIndex].votes--;
+                  doc.save()
+                }
               });
             });
-
-
-            // db.collectionName.find({"magazine.articles":{"$elemMatch":{"articleLayouts":{"$elemMatch":{"pageLayouts":{"$in":["2d641b7c-3d74-4cfa-8267-d5a01ed2614b"]}}}}}}).pretty()
 
 module.exports = searchRouter;
 
