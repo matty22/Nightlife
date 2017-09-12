@@ -30,13 +30,12 @@ main {
   display: flex;
   flex-direction: column;
   width: 200px;
-  max-height: 300px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 #resultsGrid div a {
-  padding: 5px 5px;
+  padding: 5px 5px 0px 5px;
 }
 
 #resultsGrid div p {
@@ -47,7 +46,7 @@ main {
   background-color: #0d95f3;
   color: #ffffff;
   border: none;
-  height: 40px;
+  min-height: 40px;
 }
 /* End styling of results cards */
 

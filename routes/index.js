@@ -17,6 +17,9 @@ searchRouter.get('/', function(req, res, next) {
   res.render('../public/index');
 });
 
+
+
+
 searchRouter.route('/search')
             .post(function(req, res, next) {
               // Call Yelp API and fetch nightlife options near the users' search location
@@ -63,25 +66,36 @@ searchRouter.route('/search')
 // Route for when someone clicks the I'm going button
 searchRouter.route('/going')
             .put(function(req, res, next) {
-              Locations.findOne({_id: req.body._id}, function(err, doc) {
-                if (err) throw err;
-                // Find the business I clicked on in search results object
-                let singleBusiness = doc.results.filter(function(innerObj) {
-                  if (innerObj.id === req.body.resultsId) {
-                    return innerObj;
-                  }
-                });
-                let resultsIndex = doc.results.indexOf(singleBusiness[0]);
-                // Adjust the votes total
-                // This will need to be adjusted once user login has been added
-                if (singleBusiness[0].votes === 0) {
-                  doc.results[resultsIndex].votes++;
-                  doc.save();
-                } else if (singleBusiness[0].votes === 1) {
-                  doc.results[resultsIndex].votes--;
-                  doc.save()
-                }
-              });
+              // This works but only updates the doc for the town you've searched for
+              // So duplicate bars don't both get updated
+              // Locations.findOne({_id: req.body._id}, function(err, doc) {
+              //   if (err) throw err;
+              //   // Find the business I clicked on in search results object
+              //   let singleBusiness = doc.results.filter(function(innerObj) {
+              //     if (innerObj.id === req.body.resultsId) {
+              //       return innerObj;
+              //     }
+              //   });
+              //   let resultsIndex = doc.results.indexOf(singleBusiness[0]);
+              //   // Adjust the votes total
+              //   // This will need to be adjusted once user login has been added
+              //   if (singleBusiness[0].votes === 0) {
+              //     doc.results[resultsIndex].votes++;
+              //     doc.save();
+              //     res.send(doc);
+              //   } else if (singleBusiness[0].votes === 1) {
+              //     doc.results[resultsIndex].votes--;
+              //     doc.save();
+              //     res.send(doc);
+              //   }
+              // });
+              // Increment function
+              Locations.find({}, { results: { $elemMatch: { id: req.body.yelpId }}}, function(err, locations) {
+                locations.forEach(function(element) {
+                  console.log(element);
+                  element.update({$inc: {'results.$.votes': 1}})
+                })
+              })
             });
 
 module.exports = searchRouter;
