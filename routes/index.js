@@ -17,6 +17,25 @@ searchRouter.get('/', function(req, res, next) {
   res.render('../public/index');
 });
 
+const incrementVote = (id) => {
+  Locations.updateMany(
+    { 'results.id': id },
+    { $inc: { 'results.$.votes': 1 } },
+    function (err, raw) {
+      if (err) console.log(err);
+      console.log('The raw response from Mongo was ', raw);
+    });
+}
+
+const decrementVote = (id) => {
+  Locations.updateMany(
+    { 'results.id': id },
+    { $inc: { 'results.$.votes': -1 } },
+    function (err, raw) {
+      if (err) console.log(err);
+      console.log('The raw response from Mongo was ', raw);
+    });
+}
 
 
 
@@ -90,12 +109,7 @@ searchRouter.route('/going')
               //   }
               // });
               // Increment function
-              Locations.find({}, { results: { $elemMatch: { id: req.body.yelpId }}}, function(err, locations) {
-                locations.forEach(function(element) {
-                  console.log(element);
-                  element.update({$inc: {'results.$.votes': 1}})
-                })
-              })
+             incrementVote(req.body.resultsId);
             });
 
 module.exports = searchRouter;
