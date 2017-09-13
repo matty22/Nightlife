@@ -10,13 +10,17 @@ const yelp = require('yelp-fusion');
 // Set up Mongoose schema
 var Locations = require('../models/location');
 
+// Instantiate search router
 var searchRouter = express.Router();
 searchRouter.use(bodyParser.json());
 
+// This route just returns the index.html page on route /
 searchRouter.get('/', function(req, res, next) {
   res.render('../public/index');
 });
 
+// Function to increment vote for a particular bar when
+// the Im going button is clicked
 const incrementVote = (id) => {
   Locations.updateMany(
     { 'results.id': id },
@@ -27,6 +31,8 @@ const incrementVote = (id) => {
     });
 }
 
+// Function to decrement vote for a particular bar when
+// the Im going button is clicked
 const decrementVote = (id) => {
   Locations.updateMany(
     { 'results.id': id },
@@ -38,7 +44,9 @@ const decrementVote = (id) => {
 }
 
 
-
+// This route fetches bar results from the Yelp API
+// Removes a lot of extraneous fields from Yelp results
+// Then, stores the document in the Mongo dB using the Locations schema
 searchRouter.route('/search')
             .post(function(req, res, next) {
               // Call Yelp API and fetch nightlife options near the users' search location

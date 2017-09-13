@@ -39,7 +39,7 @@ var locationSchema = new Schema({
     timestamps: true
   });
 
-// Create Poll model using poll schema
+// Create Location model using poll schema
 var Locations = mongoose.model('Location', locationSchema);
 
 // Make this available outside this module
