@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="google-signin-client_id" content="196670494989-fdcac70ufns6fnjbi0cpj5494k62gm1m.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="icon" href="../../favicon.ico">
 
     <title>Nightlife Finder</title>
@@ -20,6 +22,7 @@
       <h1>Nightlife Finder</h1>
       <input type="text" placeholder="Tell me where you are" id="searchQuery">
       <input type="button" value="Search" onclick="search()">
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </header>
     <main id="resultsGrid">
     </main>
