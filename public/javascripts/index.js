@@ -1,6 +1,9 @@
 
 var gServerResponse;
+var user_token;
 
+
+// Function runs when user hits the search button
 function search() {
   let searchObj = {};
   searchObj.location = document.getElementById('searchQuery').value;
@@ -31,10 +34,13 @@ function search() {
   xhr.send(json);
 }
 
+
+// Function runs when user hits the I'm going button
 function going(e) {
   let requestObject = {};
-  requestObject.MongoId = gServerResponse._id;
   requestObject.resultsId = e.srcElement.id;
+  requestObject.user_token = user_token;
+  console.log(requestObject);
 
   let json = JSON.stringify(requestObject);
   let xhr = new XMLHttpRequest();
@@ -50,3 +56,13 @@ function going(e) {
   }
   xhr.send(json);
 }
+
+
+// Function runs when user signs into Google
+function onSignIn(googleUser) {
+    user_token = googleUser.getAuthResponse().id_token;
+    let searchButton = document.getElementById('searchButton');
+    searchButton.disabled = false;
+    searchButton.value = 'Search';
+    
+  }
