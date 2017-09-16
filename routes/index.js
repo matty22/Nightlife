@@ -68,8 +68,10 @@ searchRouter.route('/search')
                   reformedObject.url = element.url;
                   reformedObject.location = element.location.address1;
                   reformedObject.votes = 0;
+                  reformedObject.voters = [];
                   searchArray.push(reformedObject);
                 });
+                console.log(searchArray);
                 searchResultsObject.results = searchArray;
                 // Pass along cleaned up searchArray to next .then() block
                 return searchResultsObject;

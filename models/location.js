@@ -2,6 +2,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// Define voters sub-schema
+var votersSchema = new Schema({
+  user_token: {
+    type: String
+  }
+});
+
 // Define business sub-schema
 var businessSchema = new Schema({
   name: {
@@ -23,7 +30,8 @@ var businessSchema = new Schema({
   votes: {
     type: Number,
     required: true
-  }}, 
+  },
+  voters: [votersSchema]}, 
 {
   timestamps: true
 });
