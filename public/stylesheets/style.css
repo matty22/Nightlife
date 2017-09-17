@@ -18,6 +18,28 @@ body {
   border-bottom: 2px dashed #000000;
 }
 
+#searchQuery {
+  padding: 5px 0px;
+  width: 200px;
+}
+
+#searchButton {
+  border: none;
+  padding: 6px 10px;
+  background-color: gold;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+#searchButton:hover {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+#googleButton {
+  margin-top: 10px;
+}
+
 main {
   grid-area: main;
   padding: 20px 10px;
@@ -48,6 +70,12 @@ main {
   border: none;
   min-height: 40px;
 }
+
+.buttonSwitcher {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 /* End styling of results cards */
 
 footer {
@@ -60,11 +88,6 @@ footer {
   main {
     grid-template-columns: 1fr 1fr 1fr;
   }
-}
-
-.buttonSwitcher {
-  pointer-events: none;
-  opacity: 0.5;
 }
 
 @media screen and (max-width: 700px) {

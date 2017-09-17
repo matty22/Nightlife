@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const yelp = require('yelp-fusion');
+const yelpKey = process.env.yelpKey;
 
 // Set up Mongoose schema
 var Locations = require('../models/location');
@@ -47,7 +48,8 @@ searchRouter.get('/', function(req, res, next) {
 searchRouter.route('/search')
             .post(function(req, res, next) {
               // Call Yelp API and fetch nightlife options near the users' search location
-              const client = yelp.client("nwgYO5N2mv0IQz9zdF82PP4oXRrRP2WkLi54tn5P3qe552w2nCcsqH4cq-jdS2xVZvCt_1H0gt02VlUt5HGu2vXr_i-Pa7VOrr57os5lkezXBO7QMiTn1_gGYRivWXYx");
+              // const client = yelp.client("nwgYO5N2mv0IQz9zdF82PP4oXRrRP2WkLi54tn5P3qe552w2nCcsqH4cq-jdS2xVZvCt_1H0gt02VlUt5HGu2vXr_i-Pa7VOrr57os5lkezXBO7QMiTn1_gGYRivWXYx");
+              const client = yelp.client(yelpKey);
               client.search({
                 term: req.body.term,
                 location: req.body.location
