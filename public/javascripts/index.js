@@ -40,7 +40,6 @@ function going(e) {
   let requestObject = {};
   requestObject.resultsId = e.srcElement.id;
   requestObject.user_token = user_token;
-  console.log(requestObject);
 
   let json = JSON.stringify(requestObject);
   let xhr = new XMLHttpRequest();
@@ -48,7 +47,15 @@ function going(e) {
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function() {
       if (xhr.status === 200) {
-          console.log(JSON.parse(xhr.responseText));
+        let resultsArray = JSON.parse(xhr.responseText);
+        resultsArray.forEach(function(element) {
+            if (element.id === requestObject.resultsId) {
+                let button = document.getElementById(requestObject.resultsId);
+                button.value = "Im going! (" + element.votes + ")"
+            } else {
+                console.log("not a match");
+            }
+        })
       }
       else {
           console.error("you suck: going() function");

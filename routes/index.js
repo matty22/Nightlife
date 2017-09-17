@@ -31,6 +31,28 @@ const incrementVote = (id) => {
     });
 }
 
+const addVoter = (id, token) => {
+  Locations.updateMany(
+    { 'results.id': id },
+    { $push: { 'results.$.voters': token}},
+    function(err, cb) {
+      if (err) console.log(err);
+      console.log('The addVoter callback is: ' + JSON.stringify(cb));
+    }
+  );
+}
+
+const removeVoter = (token) => {
+  Locations.updateMany(
+    { 'results.voters': token },
+    {},
+    function(err, cb) {
+      if (err) throw err;
+      console.log('The removeVoter callback is: ' + cb);
+    }
+  );
+}
+
 // Function to decrement vote for a particular bar when
 // the Im going button is clicked
 const decrementVote = (id) => {
@@ -71,7 +93,6 @@ searchRouter.route('/search')
                   reformedObject.voters = [];
                   searchArray.push(reformedObject);
                 });
-                console.log(searchArray);
                 searchResultsObject.results = searchArray;
                 // Pass along cleaned up searchArray to next .then() block
                 return searchResultsObject;
@@ -95,7 +116,38 @@ searchRouter.route('/search')
 // Route for when someone clicks the I'm going button
 searchRouter.route('/going')
             .put(function(req, res, next) {
-              incrementVote(req.body.resultsId);
+              Locations.find({ 'results.id': req.body.resultsId },
+                function (err, raw) {
+                  if (err) console.log(err);
+                  raw.forEach(function(doc){
+                    doc.results.forEach(function(bar){
+                      // Loop through the docs and determine which of the embedded docs to edit
+                      let barToEdit;
+                      if (bar.id == req.body.resultsId) {
+                        barToEdit = bar;
+                      }
+                      if (barToEdit) {
+                        // If the user has not RSVP'd to this bar, add them to voter array
+                        // And increment total votes by 1
+                        if (barToEdit.voters.indexOf(req.body.user_token) === -1) {
+                          barToEdit.voters.push(req.body.user_token);
+                          barToEdit.votes++;
+                          doc.save();
+                        }
+                        // If the user has RSVP'd to this bar, remove them from voter array
+                        // And decrement total votes by 1
+                        else if (barToEdit.voters.indexOf(req.body.user_token) >= 0) {
+                          let index = barToEdit.voters.indexOf(req.body.user_token);
+                          barToEdit.voters.splice(index, 1);
+                          barToEdit.votes--;
+                          doc.save();
+                        }
+                      }
+                    });
+                  });
+                  res.send(raw[0].results);
+                });
+              // incrementVote(req.body.resultsId);
             });
 
 module.exports = searchRouter;

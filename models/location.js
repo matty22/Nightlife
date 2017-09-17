@@ -3,11 +3,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Define voters sub-schema
-var votersSchema = new Schema({
-  user_token: {
-    type: String
-  }
-});
+// var votersSchema = new Schema({
+//   user_token: {
+//     type: String
+//   }
+// });
 
 // Define business sub-schema
 var businessSchema = new Schema({
@@ -31,7 +31,7 @@ var businessSchema = new Schema({
     type: Number,
     required: true
   },
-  voters: [votersSchema]}, 
+  voters: [{type: String}]}, 
 {
   timestamps: true
 });
