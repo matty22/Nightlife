@@ -62,6 +62,11 @@ footer {
   }
 }
 
+.buttonSwitcher {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 @media screen and (max-width: 700px) {
   main {
     grid-template-columns: 1fr 1fr;

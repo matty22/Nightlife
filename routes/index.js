@@ -19,51 +19,26 @@ searchRouter.get('/', function(req, res, next) {
   res.render('../public/index');
 });
 
-// Function to increment vote for a particular bar when
-// the Im going button is clicked
-const incrementVote = (id) => {
-  Locations.updateMany(
-    { 'results.id': id },
-    { $inc: { 'results.$.votes': 1 } },
-    function (err, raw) {
-      if (err) console.log(err);
-      console.log('The raw response from Mongo was ', raw);
-    });
-}
+// Saving these two functions as examples of how to update embedded Mongoose documents
+// const incrementVote = (id) => {
+//   Locations.updateMany(
+//     { 'results.id': id },
+//     { $inc: { 'results.$.votes': 1 } },
+//     function (err, raw) {
+//       if (err) console.log(err);
+//       console.log('The raw response from Mongo was ', raw);
+//     });
+// }
 
-const addVoter = (id, token) => {
-  Locations.updateMany(
-    { 'results.id': id },
-    { $push: { 'results.$.voters': token}},
-    function(err, cb) {
-      if (err) console.log(err);
-      console.log('The addVoter callback is: ' + JSON.stringify(cb));
-    }
-  );
-}
-
-const removeVoter = (token) => {
-  Locations.updateMany(
-    { 'results.voters': token },
-    {},
-    function(err, cb) {
-      if (err) throw err;
-      console.log('The removeVoter callback is: ' + cb);
-    }
-  );
-}
-
-// Function to decrement vote for a particular bar when
-// the Im going button is clicked
-const decrementVote = (id) => {
-  Locations.updateMany(
-    { 'results.id': id },
-    { $inc: { 'results.$.votes': -1 } },
-    function (err, raw) {
-      if (err) console.log(err);
-      console.log('The raw response from Mongo was ', raw);
-    });
-}
+// const decrementVote = (id) => {
+//   Locations.updateMany(
+//     { 'results.id': id },
+//     { $inc: { 'results.$.votes': -1 } },
+//     function (err, raw) {
+//       if (err) console.log(err);
+//       console.log('The raw response from Mongo was ', raw);
+//     });
+// }
 
 
 // This route fetches bar results from the Yelp API

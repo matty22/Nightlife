@@ -23,7 +23,12 @@ function search() {
         let barArray = serverResponse.results;
          barArray.forEach(function(element) {
           var cardChild = document.createElement("div");
-          cardChild.innerHTML = "<img src='" + element.image_url +"' width='200' height='200'>" + "<a href='" + element.url + "'>" + element.name + "</a><p>" + element.location + "</p><input id='" + element.id + "'type='button' value='Im going! (" + element.votes + ")' onclick='going(event)'>";
+          let isAuthenticated = localStorage.getItem('userId');
+          if (isAuthenticated) {
+            cardChild.innerHTML = "<img src='" + element.image_url +"' width='200' height='200'>" + "<a href='" + element.url + "'>" + element.name + "</a><p>" + element.location + "</p><input id='" + element.id + "'type='button' value='Im going! (" + element.votes + ")' onclick='going(event)'>";
+          } else if (!isAuthenticated) {
+            cardChild.innerHTML = "<img src='" + element.image_url +"' width='200' height='200'>" + "<a href='" + element.url + "'>" + element.name + "</a><p>" + element.location + "</p><input class='buttonSwitcher' id='" + element.id + "'type='button' value='Im going! (" + element.votes + ")' onclick='going(event)'>";
+          }
           document.getElementById("resultsGrid").appendChild(cardChild);
         });
       }
@@ -52,8 +57,6 @@ function going(e) {
             if (element.id === requestObject.resultsId) {
                 let button = document.getElementById(requestObject.resultsId);
                 button.value = "Im going! (" + element.votes + ")"
-            } else {
-                console.log("not a match");
             }
         })
       }
@@ -68,8 +71,11 @@ function going(e) {
 // Function runs when user signs into Google
 function onSignIn(googleUser) {
     user_token = googleUser.getAuthResponse().id_token;
-    let searchButton = document.getElementById('searchButton');
-    searchButton.disabled = false;
-    searchButton.value = 'Search';
-    
+    localStorage.setItem("userId", googleUser.getBasicProfile().getId());
+
+    let buttons = document.getElementsByClassName('buttonSwitcher');
+    let buttonArray = [].slice.call(buttons);
+    buttonArray.forEach(function(element) {
+        element.classList.remove('buttonSwitcher');
+    })
   }
