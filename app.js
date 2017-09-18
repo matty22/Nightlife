@@ -1,3 +1,4 @@
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,7 +8,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 // Production Database connection URL
-var url = process.env.MONGOURL;
+var url = process.env.MongoURL;
 
 // Localhost Database connection URL
 // var url = 'mongodb://localhost:27017/nightlife';
