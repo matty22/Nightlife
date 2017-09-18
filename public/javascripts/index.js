@@ -11,7 +11,7 @@ function search() {
 
   let json = JSON.stringify(searchObj);
   let xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:3000/search', true);
+  xhr.open('POST', 'https://matty22nightlife.herokuapp.com/search', true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function() {
       if (xhr.status === 200) {
@@ -48,7 +48,7 @@ function going(e) {
 
   let json = JSON.stringify(requestObject);
   let xhr = new XMLHttpRequest();
-  xhr.open('PUT', 'http://localhost:3000/going', true);
+  xhr.open('PUT', 'https://matty22nightlife.herokuapp.com/going', true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function() {
       if (xhr.status === 200) {
