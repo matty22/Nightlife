@@ -12,7 +12,7 @@ var url = process.env.MongoURL;
 
 // Localhost Database connection URL
 // var url = 'mongodb://localhost:27017/nightlife';
-mongoose.connect(url);
+mongoose.connect(url, {useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
