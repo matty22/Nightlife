@@ -10,7 +10,7 @@ To use, search for your location in the search bar. When the results are display
 
 This project has open issues. Development is based on the development branch. To contribute, follow these steps:
 
-* `git clone https://github.com/matty22/vue-pomodoro.git`
+* `git clone https://github.com/matty22/Nightlife.git`
 * `git checkout development`
 * `git checkout -b issue-label/reference-to-issue` (ex. bug/fix-grammar-error)
 
